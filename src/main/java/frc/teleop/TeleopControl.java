@@ -9,22 +9,21 @@ public class TeleopControl {
 
     private static TeleopControl instance;
 
-    //private RobotOutput robotOut;
-    //private SensorInput sensorIn;
-    //private DriverInput driverIn;
+    private RobotOutput robotOut;
+    private SensorInput sensorIn;
+    private DriverInput driverIn;
 
-    //private Drive drive;
-    
+    private Drive drive;    
 
     private TeleopControl() {
-        //this.sensorIn = SensorInput.getInstance();
-        //this.driverIn = DriverInput.getInstance();
-        //this.robotOut = RobotOutput.getInstance();
+        this.sensorIn = SensorInput.getInstance();
+        this.driverIn = DriverInput.getInstance();
+        this.robotOut = RobotOutput.getInstance();
 
-        //this.drive = Drive.getInstance();
+        this.drive = Drive.getInstance();
     }
 
-    public TeleopControl getInstance() {
+    public static TeleopControl getInstance() {
         if (instance == null) {
             instance = new TeleopControl();
         }
@@ -32,15 +31,15 @@ public class TeleopControl {
     }
 
     public void initialize() {
-        //drive.firstCycle();
+        drive.firstCycle();
     }
 
     public void disable() {
-        //drive.disable();
+        drive.disable();
     }
 
     public void runCycle() {
-        /*
+        
         ////////////////////
         ////// DRIVE ///////
         ///////////////////
@@ -61,7 +60,9 @@ public class TeleopControl {
 
         //output
         drive.setOutput(y,x);
-        */
+        
+
+        drive.calculate();
     }
 
 }

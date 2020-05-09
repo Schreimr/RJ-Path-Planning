@@ -26,5 +26,11 @@ public class rjLibrary {
         return rjLibrary.limitValue(val, 1.0);
     } 
 
+    public static double calcLeftTankDrive(double throttle, double steer) {
+        return throttle + steer;
+    }
 
+    public static double calcRightTankDrive(double throttle, double steer) {
+        return throttle - steer;
+    }
 }

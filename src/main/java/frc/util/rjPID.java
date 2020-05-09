@@ -128,7 +128,8 @@ public class rjPID {
         
         // Proportional Term
         pVal = this.kP * error;
-
+        //System.out.println("Error: " + error);
+        //System.out.println("P val: " + pVal);
         // Integral Term
         if (Math.abs(error) < Math.abs(this.rangeI)) {
             this.errorSum += error * this.deltaTime;
@@ -143,9 +144,9 @@ public class rjPID {
 
         // determine output
         double output = pVal + iVal + dVal;
-
+        System.out.println("PID Calc: " + output);
         output = rjLibrary.limitValue(output, this.maxOutput);
-
+        //System.out.println("Limited Output: " + output);
         if (output > 0) {
             if(output < this.minOutput) {
                 output = this.minOutput;

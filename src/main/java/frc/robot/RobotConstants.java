@@ -10,7 +10,7 @@ public class RobotConstants {
     
     private static PIDConstants driveStraightPID = new PIDConstants(3.0, 0.04, 5.0, 0.05);
 	private static PIDConstants driveTurnPID = new PIDConstants(0.2, 0.005, 0.6, 1);
-	private static PIDConstants driveVelocityPID = new PIDConstants(0.0, 0, 0.0, 0.0);
+	private static PIDConstants driveVelocityPID = new PIDConstants(0.05, 0, 0.0, 0);
 	private static PIDConstants gyroPID = new PIDConstants(0, 0, 0, 0);
 	
     public static PIDConstants getDriveStraightPID() {

@@ -17,8 +17,8 @@ public class rjPoint {
     public void rotateByAngle(double angle) {
         angle = Math.toRadians(angle);
 
-        double x_ = x * Math.cos(angle) - y * Math.sin(angle);
-        double y_ = x * Math.cos(angle) + y * Math.sin(angle);
+		double x_ = x * Math.cos(angle) - y * Math.sin(angle);
+		double y_ = x * Math.sin(angle) + y * Math.cos(angle);
     
         this.x = x_;
         this.y = y_;

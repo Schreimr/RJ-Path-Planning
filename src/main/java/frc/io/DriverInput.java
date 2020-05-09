@@ -24,7 +24,7 @@ public class DriverInput {
     // Driver Controls
 
     public double getThrottle() {
-        return driver.getLeftY();
+        return -driver.getLeftY(); //forward on joystick = -1
     }
 
     public double getSteer() {

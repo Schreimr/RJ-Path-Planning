@@ -16,10 +16,13 @@ public class SensorInput {
     private DriverStation driverStation;
     private PowerDistributionPanel pdp;
     private DriverStation.Alliance alliance;
+    private Dashboard dashboard;
     
     private rjNavx navx;
     private rjEncoder leftDriveEncoder;
     private rjEncoder rightDriveEncoder;
+
+    private long SystemTimeAtAutonStart = 0;
 
     private double leftDriveSpeedFPS;
     private double rightDriveSpeedFPS;
@@ -33,7 +36,7 @@ public class SensorInput {
     private double lastTime = 0.0;
     private double deltaTime = 20.0;
     private double matchTime;
-    private double autoStartAngle = 90;
+    private double autonStartAngle = 90;
 
     private double xPosition = 0.0;
     private double yPosition = 0.0;
@@ -49,8 +52,8 @@ public class SensorInput {
         this.pdp = new PowerDistributionPanel();
         this.driverStation = driverStation.getInstance();
         this.navx = new rjNavx();
-        this.leftDriveEncoder = new rjEncoder(0, 1);
-        this.rightDriveEncoder = new rjEncoder(4, 5);
+        this.leftDriveEncoder = new rjEncoder(5, 6);
+        this.rightDriveEncoder = new rjEncoder(2, 1);
 
         this.reset();
     }
@@ -79,7 +82,7 @@ public class SensorInput {
 
         if(this.firstCycle){
             this.firstCycle = false;
-            this.lastGyroAngle = this.navx.getAngle() + this.autoStartAngle - 90;
+            this.lastGyroAngle = this.navx.getAngle() + this.autonStartAngle - 90;
             this.driveVelocity = 0.0;
         } else {
             this.driveVelocity = this.getDriveVelocity();
@@ -102,11 +105,15 @@ public class SensorInput {
         this.prevLeftDriveSpeedFPS = this.leftDriveSpeedFPS;
         this.prevRightDriveSpeedFPS = this.rightDriveSpeedFPS;
 
-        this.gyroAngle = this.navx.getAngle() + (this.autoStartAngle + 90);
+        this.gyroAngle = this.navx.getAngle() + (this.autonStartAngle - 90);
         
         double driveXSpeed = this.driveVelocity * Math.cos(Math.toRadians(this.gyroAngle));
         double driveYSpeed = this.driveVelocity * Math.sin(Math.toRadians(this.gyroAngle)); 
         
+        SmartDashboard.putNumber("drive Velocity", this.driveVelocity);
+        SmartDashboard.putNumber("drive X Speed", driveXSpeed);
+        SmartDashboard.putNumber("drive Y Speed", driveYSpeed);
+
         this.xPosition += driveXSpeed * this.deltaTime / 1000.0;
         this.yPosition += driveYSpeed * this.deltaTime / 1000.0;
         
@@ -114,7 +121,7 @@ public class SensorInput {
 
 
     public double getDriveVelocity() {
-        return this.driveVelocity;
+        return (this.rightDriveSpeedFPS + this.leftDriveSpeedFPS) / 2;
     }
     public int getEncoderLeftTicks() {
         return this.leftDriveEncoder.get();
@@ -128,9 +135,44 @@ public class SensorInput {
     public int getEncoderRightSpeed() {
         return this.rightDriveEncoder.speed();
     }
+    public double getDriveRightFPS() {
+        return this.rightDriveSpeedFPS;
+    }
+    public double getDriveLeftFPS() {
+        return this.leftDriveSpeedFPS;
+    }
     public double getGyroAngle() { 
         return this.gyroAngle;
     }
+    public double getRawYawAngle() {
+        return navx.getRawYaw();
+    }
+    public double getOffset() {
+        return navx.getYawOffset();
+    }
+    public double getRawFusedHeading() {
+        return navx.getRawFusedHeading();
+    }
+    public void resetAutonTimer() {
+		this.SystemTimeAtAutonStart = System.currentTimeMillis();
+    }
+    public void setDriveXPosition(double x) {
+        this.xPosition = x;
+    }
+    public void setDriveYPosition(double y) {
+        this.yPosition = y;
+    }
+    public void setAutonStartAngle(double angle) {
+        this.autonStartAngle = angle;
+    }
+    public double getDriveXPosition() {
+        return this.xPosition;
+    }
+    public double getDriveYPosition() {
+        return this.yPosition;
+    }
+        
+
 }
 
 

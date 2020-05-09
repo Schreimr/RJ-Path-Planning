@@ -29,10 +29,10 @@ public class RobotOutput {
 
     private RobotOutput() {
 
-        this.driveL1 = new VictorSP(0);
-        this.driveR1 = new VictorSP(2);
-        this.driveL2 = new VictorSP(1);
-        this.driveR2 = new VictorSP(3);
+        this.driveL1 = new VictorSP(3);
+        this.driveL2 = new VictorSP(4);
+        this.driveR1 = new VictorSP(0);
+        this.driveR2 = new VictorSP(1);
         
         this.configureSpeedControllers();
 
@@ -53,13 +53,13 @@ public class RobotOutput {
 
         this.driveL1.setInverted(false);
         this.driveL2.setInverted(false);
-        this.driveR1.setInverted(false);
-        this.driveR2.setInverted(false);
+        this.driveR1.setInverted(true);
+        this.driveR2.setInverted(true);
     }
 
     public void setDriveLeft(double speed) {
         //this.driveL1.set(ControlMode.PercentOutput,output);
-        this.driveL1.set(speed);
+        this.driveL1.set(speed);   //set(speed);
         this.driveL2.set(speed);
     }
 
